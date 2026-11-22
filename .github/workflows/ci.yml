@@ -1,7 +1,6 @@
 
 name: Spring Boot CI Pipeline
 
-# Trigger workflow when code is pushed or a PR is created
 on:
   push:
     branches:
@@ -11,35 +10,26 @@ on:
     branches:
       - master
 
-# Jobs to execute
 jobs:
-
   build:
-
-    # GitHub provides an Ubuntu machine
     runs-on: ubuntu-latest
 
     steps:
-
-      # Step 1: Download source code
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # Step 2: Install Java 17
       - name: Setup Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
           cache: maven
 
-      # Step 3: Build and test Spring Boot
       - name: Build and Test Application
         run: mvn clean verify
 
-      # Step 4: Generate and save JAR artifact
       - name: Upload JAR Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: spring-boot-jar
           path: target/*.jar
